@@ -1,16 +1,19 @@
 import express from 'express';
+import path from "path";
+
+import * as dotenv from "dotenv";
+dotenv.config({
+  path: path.resolve(__dirname, '../src/development.env')
+})
 import UserRouter from './route/user.router';
 import AuthMiddleware from './middleware/auth.middleware'
 import ErrorMiddleware from './middleware/error.middleware'
-import * as dotenv from "dotenv";
-import path from "path";
+
 import cors from 'cors'
 import cookieParser from "cookie-parser";
 import isAuthRouter from "./completed.routes/IsAuth.router";
 
-dotenv.config({
-  path: path.resolve(__dirname, '../src/dev.env')
-})
+
 
 
 const app = express()

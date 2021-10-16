@@ -30,7 +30,6 @@ class UserService {
         tokens
       }
     } catch (e) {
-      console.log(e)
       throw e
     }
   }
