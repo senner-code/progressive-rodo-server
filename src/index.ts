@@ -12,6 +12,7 @@ dotenv.config({
   path: path.resolve(__dirname, '../src/dev.env')
 })
 
+
 const app = express()
 
 app.use(express.json())
@@ -23,17 +24,19 @@ app.use(cors({
   }
 ))
 
-app.use(
-  isAuthRouter
-)
 
 app.use('/user', UserRouter)
 
 app.use(
-  // @ts-ignore
-  ErrorMiddleware
+  AuthMiddleware,
+  isAuthRouter
 )
 
-app.listen(process.env.PORT, () => {
+
+app.use(ErrorMiddleware)
+
+app.listen(process.env.PORT, async () => {
   console.log('Server started on port - ', process.env.PORT)
-})
+
+}
+)

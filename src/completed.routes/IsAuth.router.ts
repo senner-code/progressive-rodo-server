@@ -1,6 +1,6 @@
 import express from "express";
 import CardRouter from '../route/card.router'
-import TodoRouter from '../route/todo.router'
+import TaskRouter from '../route/task.router'
 
 const isAuthRouter = express()
 
@@ -9,9 +9,10 @@ isAuthRouter
   '/card',
   CardRouter
   )
-  .use(
-    '/todo',
-    TodoRouter
-  )
+
+isAuthRouter.use(
+  '/task',
+  TaskRouter
+)
 
 export default isAuthRouter

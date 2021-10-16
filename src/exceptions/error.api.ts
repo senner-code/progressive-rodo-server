@@ -21,6 +21,10 @@ class ErrorApi extends Error {
     return new ErrorApi({status: 401, message, errors})
   }
 
+  static ServerError(){
+    return new ErrorApi({status: 500, message: 'Server Error', errors: []})
+  }
+
 }
 
 export default ErrorApi

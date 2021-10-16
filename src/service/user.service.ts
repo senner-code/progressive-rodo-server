@@ -30,11 +30,13 @@ class UserService {
         tokens
       }
     } catch (e) {
+      console.log(e)
       throw e
     }
   }
 
   async login<T>(email: string, password: string) {
+
     const candidate = await checkUserCandidate<boolean>(email)
 
     if (!candidate) {
@@ -44,6 +46,7 @@ class UserService {
     const user = (await pool.query<UserRes & UserReq>(`select *
                                                        from public.users
                                                        where email = '${email}'`)).rows[0]
+
     const passwordCompare = await bcrypt.compare(password, user.password)
 
     if (!passwordCompare) {
@@ -61,7 +64,8 @@ class UserService {
         tokens
       }
     } catch (e) {
-      throw 'Server Error'
+      console.log(e)
+      throw e
     }
 
   }
@@ -71,19 +75,23 @@ class UserService {
     if (!validate) {
       throw ErrorApi.UnauthorizedError()
     }
-
-    const user = new UserDto((await pool.query<UserRes>(`select *
+    try{
+      console.log('Here')
+      const user = new UserDto((await pool.query<UserRes>(`select *
                                                          from users
                                                          where id = ${validate.id}`)).rows[0])
+      console.log(user)
+      const tokens = TokenService.generateTokens({...user})
 
+      await TokenService.saveToken(tokens.refreshToken,user.id)
 
-    const tokens = TokenService.generateTokens({...user})
-
-    await TokenService.saveToken(tokens.refreshToken,user.id)
-
-    return {
-      user,
-      tokens
+      return {
+        user,
+        tokens
+      }
+    }catch (e) {
+      console.log(e)
+      throw e
     }
 
   }

@@ -1,3 +1,10 @@
+drop table task;
+drop table card;
+drop table token;
+drop table users;
+
+
+
 create table users (
     id serial primary key,
     name varchar(255),
@@ -5,9 +12,15 @@ create table users (
     password varchar(255)
 );
 
+create table token (
+  user_id integer references users(id),
+  refresh_token varchar(255)
+);
+
 
 create table card (
     id serial primary key,
+    name varchar(255),
     admin_id integer REFERENCES users(id)
 );
 
@@ -16,8 +29,9 @@ create table task (
     card_id integer REFERENCES card(id),
     title varchar(255),
     description varchar(255),
-    start_date timestamptz,
-    end_date timestamptz,
+    start timestamptz,
+    percent smallint,
+    deadline timestamptz,
     completed boolean
 );
 

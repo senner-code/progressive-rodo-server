@@ -33,9 +33,8 @@ class UserController {
       return res.json(user)
 
     } catch (e) {
-      res.json({
-        e
-      })
+      console.log(e)
+      next(e)
     }
   }
 
@@ -46,9 +45,7 @@ class UserController {
       res.cookie('refreshToken', user.tokens.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true})
       return res.json(user)
     } catch (e) {
-      res.json({
-        e
-      })
+      next(e)
     }
   }
 
@@ -59,6 +56,7 @@ class UserController {
       res.cookie('refreshToken', user.tokens.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true})
       return res.json(user)
     } catch (e) {
+
       next(e)
     }
   }
