@@ -10,6 +10,30 @@ export interface Card {
 
 class CardController {
 
+  async getAll(req: Request, res: Response, next: NextFunction) {
+    try {
+      const user_id = req.params.user_id
+
+      const cards: Card[] = await CardService.getAll(Number(user_id))
+
+      return res.json(cards)
+    } catch (e) {
+      next(e)
+    }
+  }
+
+  async getOne(req: Request, res: Response, next: NextFunction) {
+    try {
+      const card_id = req.params.card_id
+
+      const card:Card = await CardService.getOne(Number(card_id))
+
+      return res.json(card)
+    } catch (e) {
+      next(e)
+    }
+  }
+
   async add(req: Request, res: Response, next: NextFunction) {
     try {
       const {user_id, name} = req.body

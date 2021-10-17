@@ -13,6 +13,31 @@ export interface Task {
 }
 
 class TaskController {
+  async getAll(req: Request, res: Response, next: NextFunction) {
+    try {
+      const card_id = req.params.card_id
+
+      const tasks: Task[] = await TaskService.getAll(Number(card_id))
+
+      return res.json(tasks)
+    } catch (e) {
+      next(e)
+    }
+  }
+
+  async getOne(req: Request, res: Response, next: NextFunction) {
+    try {
+      const task_id = req.params.task_id
+
+      const task: Task = await TaskService.getOne(Number(task_id))
+
+      return res.json(task)
+    } catch (e) {
+      next(e)
+    }
+  }
+
+
   async add(req: Request, res: Response, next: NextFunction) {
     try {
       const {card_id, title, description, start, deadline, percent} = req.body

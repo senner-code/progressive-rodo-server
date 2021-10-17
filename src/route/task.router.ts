@@ -4,8 +4,11 @@ import TaskController from '../controller/task.controller'
 
 const router = Router()
 
-router.post('/add', TaskController.add)
+
 router.get('/remove/:id',TaskController.remove)
+router.get('/get_all/:card_id', TaskController.getAll)
+router.get('/get_one/:task_id', TaskController.getOne)
+router.post('/add', TaskController.add)
 router.post('/change_title', TaskController.changeTitle)
 router.post('/change_description', TaskController.changeDescription)
 router.post('/change_complete', TaskController.changeComplete)

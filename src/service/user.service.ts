@@ -63,7 +63,6 @@ class UserService {
         tokens
       }
     } catch (e) {
-      console.log(e)
       throw e
     }
 
@@ -75,11 +74,9 @@ class UserService {
       throw ErrorApi.UnauthorizedError()
     }
     try{
-      console.log('Here')
       const user = new UserDto((await pool.query<UserRes>(`select *
                                                          from users
                                                          where id = ${validate.id}`)).rows[0])
-      console.log(user)
       const tokens = TokenService.generateTokens({...user})
 
       await TokenService.saveToken(tokens.refreshToken,user.id)
@@ -89,7 +86,6 @@ class UserService {
         tokens
       }
     }catch (e) {
-      console.log(e)
       throw e
     }
 

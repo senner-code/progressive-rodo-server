@@ -5,12 +5,13 @@ import * as dotenv from "dotenv";
 dotenv.config({
   path: path.resolve(__dirname, '../src/development.env')
 })
+import cors from 'cors'
+import cookieParser from "cookie-parser";
 import UserRouter from './route/user.router';
 import AuthMiddleware from './middleware/auth.middleware'
 import ErrorMiddleware from './middleware/error.middleware'
 
-import cors from 'cors'
-import cookieParser from "cookie-parser";
+
 import isAuthRouter from "./completed.routes/IsAuth.router";
 
 
@@ -20,6 +21,8 @@ const app = express()
 
 app.use(express.json())
 
+console.log(process.env.CLIENT_URL)
+
 app.use(cookieParser())
 app.use(cors({
     credentials: true,
@@ -28,9 +31,12 @@ app.use(cors({
 ))
 
 
+
+
 app.use('/user', UserRouter)
 
 app.use(
+  '/auth',
   AuthMiddleware,
   isAuthRouter
 )

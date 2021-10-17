@@ -3,6 +3,23 @@ import {Card} from "../controller/card.controller";
 import ErrorApi from "../exceptions/error.api";
 
 class CardService {
+
+  async getAll(user_id: number) {
+    try {
+      return (await pool.query(`select * from card where admin_id=${user_id}`)).rows
+    } catch (e) {
+      throw e
+    }
+  }
+
+  async getOne(card_id: number) {
+    try {
+      return (await pool.query(`select * from card where id=${card_id}`)).rows[0]
+    } catch (e) {
+      throw e
+    }
+  }
+
   async add(user_id: number, name: string) {
     try {
       return (await pool.query<Card>(`insert into card (name, admin_id)

@@ -13,7 +13,6 @@ class TokenService {
         refreshToken,
       }
     } catch (e) {
-      console.log(e)
       throw e
     }
   };
@@ -33,7 +32,6 @@ class TokenService {
                                 VALUES ('${refreshToken}', ${user_id})`))
 
     } catch (e) {
-      console.log(e)
       throw e
     }
   }

@@ -4,12 +4,35 @@ import {Task} from "../controller/task.controller";
 
 class TaskService {
 
+  async getAll(card_id: number) {
+    try {
+      return (await pool.query(`select *
+                                      from task
+                                      where card_id = ${card_id}`)).rows
+
+    } catch (e) {
+      throw e
+    }
+  }
+
+  async getOne(task_id: number) {
+    try {
+      return (await pool.query(`select *
+                                from task
+                                where id = ${task_id}`)).rows[0]
+
+    } catch (e) {
+      throw e
+    }
+  }
+
   async add(card_id: number, title: string, description: string | null, start: string | null, deadline: string | null, percent: number | null) {
     try {
       return (await pool.query<Task>(`insert into task (card_id, title, description, start, deadline, percent, completed)
-                                VALUES (${card_id}, '${title}', '${description}', '${start}', '${deadline}', ${percent},
-                                        ${false})
-                                returning *`)).rows[0]
+                                      VALUES (${card_id}, '${title}', '${description}', '${start}', '${deadline}',
+                                              ${percent},
+                                              ${false})
+                                      returning *`)).rows[0]
     } catch (e) {
       throw e
     }
