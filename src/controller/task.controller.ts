@@ -41,7 +41,7 @@ class TaskController {
   async add(req: Request, res: Response, next: NextFunction) {
     try {
       const {card_id, title, description, start, deadline, percent} = req.body
-      const task = await TaskService.add(card_id, title, description, start, deadline, percent)
+      const task = await TaskService.add(card_id, title, description || null, start || null, deadline || null, percent || 0)
       return res.json(task)
     } catch (e) {
       next(e)

@@ -13,7 +13,7 @@ create table users (
 );
 
 create table token (
-  user_id integer references users(id),
+  user_id integer references users(id) on DELETE CASCADE,
   refresh_token varchar(255)
 );
 
@@ -21,17 +21,17 @@ create table token (
 create table card (
     id serial primary key,
     name varchar(255),
-    admin_id integer REFERENCES users(id)
+    admin_id integer REFERENCES users(id) on DELETE CASCADE
 );
 
 create table task (
     id serial primary key,
-    card_id integer REFERENCES card(id),
+    card_id integer REFERENCES card(id) on DELETE CASCADE ,
     title varchar(255),
     description varchar(255),
-    start timestamptz,
+    start timestamptz null,
     percent smallint,
-    deadline timestamptz,
+    deadline timestamptz null,
     completed boolean
 );
 

@@ -21,12 +21,11 @@ const app = express()
 
 app.use(express.json())
 
-console.log(process.env.CLIENT_URL)
-
 app.use(cookieParser())
 app.use(cors({
     credentials: true,
-    origin: process.env.CLIENT_URL,
+    origin: process.env.CLIENT_HOST,
+    optionsSuccessStatus: 200
   }
 ))
 
@@ -44,8 +43,9 @@ app.use(
 
 app.use(ErrorMiddleware)
 
+
+
 app.listen(process.env.PORT, async () => {
   console.log('Server started on port - ', process.env.PORT)
-
 }
 )
